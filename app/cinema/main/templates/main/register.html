@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Главная</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="{% static 'main/css/main.css' %}" rel="stylesheet" type="text/css" />
+</head>
+<body style="background:  url(static/main/img/lofin.jpg) no-repeat center top;">
+    <div class="register_center"  >
+        <div align="center">
+		<div id="login" class="boxed">
+			<div class="title">
+				<h2>Регистрация</h2>
+			</div>
+			<div class="content">
+				<form method="post" >
+                    {% csrf_token %}
+					<fieldset>
+					<legend>Зарегистрироваться</legend>
+
+
+                        {% for field in form %}
+                        {{ field }}
+                        {% endfor %}
+
+					<button class="gradient-button">Зарегистрироваться</button>
+					</fieldset>
+				</form>
+			</div>
+        </div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Главная</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="{% static 'main/css/main.css' %}" rel="stylesheet" type="text/css" />
+</head>
+<body style="background: #000000 url(static/main/img/img1.jpg) no-repeat center top;">
+
+
+
+<div id="logo">
+
+	<h1><a href="#">КИНОМИР</a></h1>
+	<h2><a href="http://www.freecsstemplates.org/">Добро пожаловать {{ request.user.username }}</a></h2>
+</div>
+<div id="menu">
+	<ul>
+		<li class="active first"><a href="home" title="">Главная</a></li>
+		<li><a href="favorites" title="">Избранное</a></li>
+		<li><a href="history" title="">История</a></li>
+		<li><a href="exit" title="">Выход</a></li>
+
+
+	</ul>
+</div>
+<div id="page">
+
+		<div id="welcome" class="post">
+
+			<div class="title">
+				{%for el in cinema %}
+
+						<h1 >{{el.cinema_name}}</h1>
+						<h3>Дата премьеры: {{el.year}}</h3>
+						<h3>Режиссёр {{el.cinema_producer}}</h3>
+						<h3>Возраст {{el.limit}} +</h3>
+						<h3>Жанр: {{el.cinema_genre}}</h3>
+						<h3>Сюжет: {{el.story}}</h3>
+						<div class="rating">
+							{% if el.raiting < 1 %}<span style="opacity: 0.3">★</span>{% else %}<span>★</span>{% endif %}
+							{% if el.raiting < 2 %}<span style="opacity: 0.3">★</span>{% else %}<span>★</span>{% endif %}
+							{% if el.raiting < 3 %}<span style="opacity: 0.3">★</span>{% else %}<span>★</span>{% endif %}
+							{% if el.raiting < 4  %}<span style="opacity: 0.3">★</span>{% else %}<span>★</span>{% endif %}
+							{% if el.raiting < 5 %}<span style="opacity: 0.3">★</span>{% else %}<span>★</span>{% endif %}
+						</div>										
+					<div class="btn-group">
+					<form method="post">{% csrf_token %}
+						<button name="action_1" value="{{el.trailer}}" class="gradient-button">Трейлер</button>
+					</form>
+					<form method="post">{% csrf_token %}
+						<button name="action_2" value="{{el.id}}" class="gradient-button">Фильм</button>
+					</form>
+					<form method="post">{% csrf_token %}
+						<button name="action_3" value="{{el.id}}" class="gradient-button">В избранное</button>
+					</form>
+					<form method="post">{% csrf_token %}
+						<select class="gradient-button" name="action_4">
+							<option value="">Оценить</option>
+							<option value="{{el.id}}1">1</option>
+							<option value="{{el.id}}2">2</option>
+							<option value="{{el.id}}3">3</option>
+							<option value="{{el.id}}4">4</option>
+							<option value="{{el.id}}5">5</option>
+						</select>
+					</form>
+					</div><br/><br/><br/><br/>
+				{% endfor %}
+			</div><br/><br/>
+		</div>
+
+
+	</div>
+	<div id="extra" style="clear: both;">&nbsp;</div>
+</div>
+<div id="footer">
+	<p id="legal">Самара 2022 <a href="#"></a></p>
+</div>
+<script>
+let list_select = document.getElementsByTagName('select');
+for (let item of list_select) {
+	item.addEventListener('change', function(event) {
+		event.preventDefault();
+		this.form.submit();
+	})
+};
+</script>
+</body>
+</html>

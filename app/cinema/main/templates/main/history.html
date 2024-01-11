@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>История</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="{% static 'main/css/main.css' %}" rel="stylesheet" type="text/css" />
+</head>
+<body style="background: #000000 url(static/main/img/img1.jpg) no-repeat center top;">
+<div id="logo">
+	<h1><a href="#">КИНОМИР</a></h1>
+	<h2><a href="http://www.freecsstemplates.org/">Просмотренные фильмы</a></h2>
+</div>
+<div id="menu">
+	<ul>
+		<li><a href="home" title="">Главная</a></li>
+		<li><a href="favorites" title="">Избранное</a></li>
+		<li class="active first"><a href="history" title="">История</a></li>
+		<li><a href="exit" title="">Выход</a></li>
+
+	</ul>
+</div>
+<!-- end #menu -->
+<div id="page">
+	<div id="content">
+		<div id="welcome" class="post">
+			<div class="title">
+				{% for el in cinema %}
+				<h1 >{{el.history_cinema.cinema_name}}</h1>
+				<h3>Дата премьеры: {{el.history_cinema.year}}</h3>
+				<h3>Режиссёр {{el.history_cinema.cinema_producer}}</h3>
+				<h3>Возраст {{el.history_cinema.limit}} +</h3>
+				<h3>Жанр: {{el.cinema_genre}}</h3>
+				<h3>Сюжет: {{el.history_cinema.story}}</h3>
+				<div class="rating">
+					{% if el.history_cinema.raiting < 1 %}<span style="opacity: 0.3">★</span>{% else %}<span>★</span>{% endif %}
+					{% if el.history_cinema.raiting < 2 %}<span style="opacity: 0.3">★</span>{% else %}<span>★</span>{% endif %}
+					{% if el.history_cinema.raiting < 3 %}<span style="opacity: 0.3">★</span>{% else %}<span>★</span>{% endif %}
+					{% if el.history_cinema.raiting < 4  %}<span style="opacity: 0.3">★</span>{% else %}<span>★</span>{% endif %}
+					{% if el.history_cinema.raiting < 5 %}<span style="opacity: 0.3">★</span>{% else %}<span>★</span>{% endif %}
+				</div>
+				<div class="btn-group">
+					<form method="post">{% csrf_token %}
+						<button name="action_1" value="{{el.history_cinema.trailer}}" class="gradient-button">Трейлер</button>
+					</form>
+					<form method="post">{% csrf_token %}
+						<button name="action_2" value="{{el.history_cinema.id}}" class="gradient-button">Фильм</button>
+					</form>
+					<form method="post">{% csrf_token %}
+						<button name="action_3" value="{{el.history_cinema.id}}" class="gradient-button">Удалить из истории</button>
+					</form>
+					<form method="post">{% csrf_token %}
+						<select class="gradient-button" name="action_4">
+							<option value="">Оценить</option>
+							<option value="{{el.history_cinema.id}}1">1</option>
+							<option value="{{el.history_cinema.id}}2">2</option>
+							<option value="{{el.history_cinema.id}}3">3</option>
+							<option value="{{el.history_cinema.id}}4">4</option>
+							<option value="{{el.history_cinema.id}}5">5</option>
+						</select>
+					</form>
+					</div><br/><br/><br/><br/>
+				{%endfor%}
+			</div>
+		</div>
+		<div id="example" class="post">
+
+
+		</div>
+	</div>
+	<!-- end #content -->
+	<div id="sidebar">
+
+		<!-- end #login -->
+		<div class="boxed">
+			<div class="title">
+
+			</div>
+
+		</div>
+	</div>
+	<!-- end #sidebar -->
+	<div id="extra" style="clear: both;">&nbsp;</div>
+</div>
+<!-- end #page -->
+<div id="footer">
+	<p id="legal">Самара 2022 <a href="#"></a></p>
+
+</div>
+<script>
+	let list_select = document.getElementsByTagName('select');
+	for (let item of list_select) {
+		item.addEventListener('change', function(event) {
+			event.preventDefault();
+			this.form.submit();
+		})
+	};
+</script>
+</body>
+</html>
